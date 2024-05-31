@@ -31,7 +31,7 @@ export class UserService {
   }
 
   findAll() {
-    return `this action return all user`;
+    return this.userRepository.find();
   }
 
   update(id: number, createUserDto: UpdateUserDto) {
@@ -42,6 +42,6 @@ export class UserService {
   }
 
   remove(id: number) {
-    return `this user removed`
+    return this.userRepository.delete(id);
   }
 }
