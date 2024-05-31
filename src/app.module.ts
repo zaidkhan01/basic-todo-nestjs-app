@@ -3,6 +3,14 @@ import { Module } from '@nestjs/common';
 
 import  {ConfigModule , ConfigService} from "@nestjs/config";
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserModule } from './user/user.module';
+import { TodoModule } from './todo/todo.module';
+
+//find all user
+//add user
+//delete user
+
+
 
 
 @Module({
@@ -19,10 +27,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         password: configService.get('DATABASE_PASSWORD'),
         synchronize: configService.get<boolean>('DATABASE_SYNC'),
         logging: configService.get<boolean>('DATABASE_LOGGING'),
-        database: configService.get('DATABASE_NAME'),
-        // entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        database: 'postgres',
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
       }),
-    })
+      
+    }),
+    UserModule,
+    TodoModule
   ],
   controllers: [],
   providers: [],
