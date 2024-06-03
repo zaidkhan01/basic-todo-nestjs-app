@@ -22,6 +22,6 @@ export class User {
   role: string;
 
   // one user can have multipe todos
-//   @OneToMany(() => Todo, (todo) => todo.user)
-//   todos: Todo[];
+  @OneToMany(() => Todo, (todo) => todo.user)
+  todos: Todo[];
 }
