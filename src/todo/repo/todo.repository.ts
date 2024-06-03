@@ -1,6 +1,10 @@
-import {EntityRepository, Repository} from 'typeorm';
 import { Todo } from '../entities/todo.entity';
 
 
-@EntityRepository(Todo)
-export class TodoRepository extends Repository<Todo>{}
+
+import { Injectable } from '@nestjs/common';
+import {  Repository } from 'typeorm';
+
+
+@Injectable()
+export class TodoRepository extends Repository<Todo> {}
