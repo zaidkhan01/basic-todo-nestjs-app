@@ -1,25 +1,33 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete ,ValidationPipe} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete ,ValidationPipe, Req, UseGuards} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRepository } from './repo/user.repository';
+import { RoleGuard } from 'src/auth/guard/role.guard';
+import { Constants } from 'src/utils/constants';
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
+  @Post("/signUp")
   create(@Body(ValidationPipe) createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
 
   @Get()
-  findAll() {
+  // @UseGuards(new RoleGuard(Constants.ROLES.ADMIN_ROLE))
+  findAll(@Req() req) {
+    console.log(req.user)
     return this.userService.findAll();
   }
 
   // @Get(':id')
+  // findOne(@Param('id') id: number) {
+  //   return this.userService.findUserById(id);
+  // }
+  // @Get(':id')
   // findOne(@Param('id') id: string) {
-  //   return this.userService.findOne(+id);
+  //   return this.userService.findUserById(parseInt(id, 10)); // Convert id to integer
   // }
 
   // @Patch(':id')
@@ -28,7 +36,9 @@ export class UserController {
   // }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  @UseGuards(new RoleGuard(Constants.ROLES.ADMIN_ROLE))
+  remove(@Param('id') id: string , @Req() req) {
+    console.log(req.user);
     return this.userService.remove(+id);
   }
 }

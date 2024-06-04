@@ -10,6 +10,9 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
+  // findOne(id: number) {
+  //   throw new Error('Method not implemented.');
+  // }
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>) {
@@ -21,7 +24,7 @@ export class UserService {
     user.firstName = createUserDto.firstName;
     user.lastName = createUserDto.lastName;
     user.password = createUserDto.password;
-    user.role = Constants.ROLES.NORMAL_ROLE;
+    user.role = createUserDto.role;
     // console.log(this.userRepository)
     return this.userRepository.save(user);
   }
@@ -34,11 +37,11 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  update(id: number, createUserDto: UpdateUserDto) {
-    return `This action updates a #${id} todo`;
-  }
+  // update(id: number, createUserDto: UpdateUserDto) {
+  //   return `This action updates a #${id} todo`;
+  // }
   findUserByEmail(email: string) {
-    return `this user find user by email`;
+    return this.userRepository.findOne({where:{email:email}});
   }
 
   remove(id: number) {
