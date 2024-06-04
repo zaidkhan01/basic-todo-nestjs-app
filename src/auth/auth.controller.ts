@@ -1,8 +1,9 @@
-import { Controller, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Post, Req, UseGuards } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { AuthGuard } from "@nestjs/passport";
 import { ApiTags } from "@nestjs/swagger";
 import { User } from "src/user/entities/user.entity";
+import { LoginDto } from "./dto/login.dto";
 
 
 
@@ -16,7 +17,7 @@ constructor(private jwtService:JwtService){}
 
     @Post('/login')
     @UseGuards(AuthGuard("local"))
-    login(@Req() req){
+    login(@Req() req, @Body() loginDto:LoginDto){
 
         //jwt token
       const user:User=req.user;
