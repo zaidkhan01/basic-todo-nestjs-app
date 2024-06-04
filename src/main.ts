@@ -14,6 +14,19 @@ async function bootstrap() {
    .setTitle("TodoApp")
    .setDescription("Todo NestApp Rest Api Docs")
    .setVersion("1.0")
+   .addBearerAuth(
+    {
+      type:'http',
+      scheme:'bearer',
+      bearerFormat:'JWT ',
+      name:'JWT',
+      description:'Enter JWT Token',
+      in:'header',
+    },
+    'JWT-auth',
+   ).build();
+   const document=SwaggerModule.createDocument(app,options);
+   SwaggerModule.setup('api',app,document);
   await app.listen(3000);
 }
 bootstrap();

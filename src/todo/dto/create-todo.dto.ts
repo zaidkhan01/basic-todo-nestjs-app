@@ -1,8 +1,9 @@
 // import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 
 export class CreateTodoDto {
-//   @ApiProperty()
+  @ApiProperty()
   @IsString()
   title: string;
 }

@@ -5,7 +5,12 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRepository } from './repo/user.repository';
 import { RoleGuard } from 'src/auth/guard/role.guard';
 import { Constants } from 'src/utils/constants';
+import { ApiSecurity, ApiTags } from '@nestjs/swagger';
+
+
 @Controller('user')
+@ApiTags('User')
+// @ApiSecurity("JWT-auth")
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -14,8 +19,9 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
+  @ApiSecurity("JWT-auth")
   @Get()
-  // @UseGuards(new RoleGuard(Constants.ROLES.ADMIN_ROLE))
+  @UseGuards(new RoleGuard(Constants.ROLES.ADMIN_ROLE))
   findAll(@Req() req) {
     console.log(req.user)
     return this.userService.findAll();
@@ -34,7 +40,7 @@ export class UserController {
   // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
   //   return this.userService.update(+id, updateUserDto);
   // }
-
+  @ApiSecurity("JWT-auth")
   @Delete(':id')
   @UseGuards(new RoleGuard(Constants.ROLES.ADMIN_ROLE))
   remove(@Param('id') id: string , @Req() req) {

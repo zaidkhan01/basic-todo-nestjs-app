@@ -12,7 +12,7 @@ export class LocalStrategy extends PassportStrategy(Strategy){
     constructor(private userService:UserService){
         super({
             usernameField:'email',
-            passportField:"password",
+            passportField:'password',
     })
     }
    async validate(email:string, password:string):Promise<User>{
