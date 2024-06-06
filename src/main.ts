@@ -26,7 +26,7 @@ async function bootstrap() {
     'JWT-auth',
    ).build();
    const document=SwaggerModule.createDocument(app,options);
-   SwaggerModule.setup('todo-api',app,document);
+   SwaggerModule.setup('/',app,document);
   await app.listen(5000);
 }
 bootstrap();
